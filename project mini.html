@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DOM KT Practice</title>
+    <style>
+        /* Hour 3 styling examples */
+        #hoverBox {
+            width: 100px;
+            height: 100px;
+            background-color: lightgray;
+            margin: 10px;
+        }
+        .card {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .menu-item {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hour 1: DOM Basics -->
+    <h1 id="mainHeading">Hello DOM</h1>
+    <p class="info">First paragraph</p>
+    <p class="info">Second paragraph</p>
+
+    <!-- Hour 2: Access & Manipulation -->
+    <ul>
+        <li class="menu-item">Home</li>
+        <li class="menu-item">About</li>
+    </ul>
+    <img id="logo" src="oldlogo.png" alt="Logo">
+
+    <button id="changeBtn">Change Heading</button>
+    <button id="createBtn">Add Paragraph</button>
+    <button id="removeBtn">Remove Paragraph</button>
+
+    <!-- Hour 3: Events & Traversal -->
+    <div id="hoverBox"></div>
+
+    <div class="card">
+        <h2>Card 1</h2>
+        <p>Description 1</p>
+        <button class="editBtn">Edit</button>
+    </div>
+    <div class="card">
+        <h2>Card 2</h2>
+        <p>Description 2</p>
+        <button class="editBtn">Edit</button>
+    </div>
+
+    <input type="text" id="username" placeholder="Enter your name">
+    <p id="display"></p>
+
+<script>
+    /* ================== HOUR 1: DOM BASICS ================== */
+    // Access the document title
+    console.log(document.title);  // prints the current page title in console
+
+    // Access the document body
+    console.log(document.body);   // prints the body element and its content
+
+    // Get element by ID
+    let h1 = document.getElementById("mainHeading");
+    console.log(h1.innerText);    // prints the text content of the heading
+
+    // Get all paragraphs by tag name
+    let paragraphs = document.getElementsByTagName("p");
+    console.log(paragraphs[0].innerText); // prints first paragraph text
+
+    // Get elements by class name
+    let infos = document.getElementsByClassName("info");
+    console.log(infos[1].innerText);      // prints second paragraph with class 'info'
+
+    // <p class="highlights"> First paragraph </p>
+    // <p class="highlights"> second paragraph</p>
+
+    // Query selector (first match)
+    let firstParaQuery = document.querySelector("p");
+    console.log(firstParaQuery.innerText); // prints first <p> element text
+
+
+// depth first
+
+
+    // Query selector all (all matches)
+    let allParasQuery = document.querySelectorAll("p");
+    console.log(allParasQuery.length);     // prints total number of <p> elements
+
+
+
+
+
+    /* ================== HOUR 2: DOM MANIPULATION ================== */
+    // Change heading text and style
+    let heading = document.getElementById("mainHeading");
+
+
+    heading.innerText = "Welcome to DOM World!"; // updates heading text
+
+
+    heading.style.color = "blue";               // updates text color to blue
+
+    // Change paragraph content using innerHTML
+
+    paragraphs[0].innerHTML = "<b>Bold text in first paragraph</b>"; // wraps text in bold
+
+    // Change attributes
+    let logo = document.getElementById("logo");
+    logo.setAttribute("src", "newlogo.png"); // changes image source
+
+    // Change heading background color
+    heading.style.backgroundColor = "yellow";
+
+    // Create and append a new paragraph
+    let createBtn = document.getElementById("createBtn");
+    createBtn.addEventListener("click", function() {
+        let newPara = document.createElement("p"); // create a new <p> element
+        newPara.innerText = "This is a new paragraph added dynamically."; // set text
+        document.body.appendChild(newPara); // add paragraph to the end of body
+    });
+
+    // Remove first paragraph
+    let removeBtn = document.getElementById("removeBtn");
+    removeBtn.addEventListener("click", function() {
+        let oldPara = document.querySelector("p"); // selects first paragraph
+        if(oldPara) {
+            document.body.removeChild(oldPara);  // removes the paragraph from DOM
+        }
+    });
+
+    // Change color of first menu item
+    let items = document.getElementsByClassName("menu-item");
+    items[0].style.color = "red";
+
+    /* ================== HOUR 3: EVENTS & DOM TRAVERSAL ================== */
+    // Button click changes heading text and style
+    let changeBtn = document.getElementById("changeBtn");
+    changeBtn.addEventListener("click", function() {
+        heading.innerText = "Heading Changed!";
+        heading.style.color = "green";
+    });
+
+    // Mouseover event changes box color
+    let box = document.getElementById("hoverBox");
+    box.addEventListener("mouseover", function() {
+        box.style.backgroundColor = "yellow";
+    });
+
+    // Input field shows typed text in real-time
+    let input = document.getElementById("username");
+    let display = document.getElementById("display");
+    input.addEventListener("input", function() {
+        display.innerText = "You typed: " + input.value;
+    });
+
+    // DOM Traversal example with multiple cards
+
+    element.parentNode //moves to the parent element
+    
+
+    let buttons = document.querySelectorAll(".editBtn"); // select all edit buttons
+    buttons.forEach(function(btn) {
+        btn.addEventListener("click", function() {
+            let card = btn.parentNode;                  // navigate to parent card div
+            card.firstElementChild.innerText = "Edited!"; // change first child heading text
+        });
+    });
+
+    // Example of sibling navigation
+    // (Optional) you can select first paragraph and change the next sibling's style
+    let firstPara = document.querySelector("p");
+    if(firstPara.nextElementSibling) {
+        firstPara.nextElementSibling.style.color = "purple"; // changes second paragraph
+    }
+</script>
+
+</body>
+</html>
